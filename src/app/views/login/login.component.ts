@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import {ApiService} from '../../services/api/api.service';
-import {LoginI} from '../../models/login.interface'
+import {LoginI} from '../../models/login.interface';
+import { ResponseI} from '../../models/response.interface';
+
+import { Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -18,7 +22,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required)
   })
 
-  constructor(private apiService:ApiService) {}
+  constructor(private apiService:ApiService, private router:Router) {}
   ngOnInit(): void {
   }
 
@@ -31,10 +35,20 @@ export class LoginComponent implements OnInit {
 
     this.apiService.loginByEmail(form).subscribe({
       next: (data) => {
+        console.log(data);
+        
+        let dataResponse: ResponseI = data
+        if(dataResponse.status == "ok") {
+          localStorage.setItem('token', dataResponse.result.token);
+          //redirect to page dashboard
+          //it's necessary to pass array into navigate()
+          this.router.navigate(['dashboard']);
+        }
         console.log("Login correcto:", data);
       },
       error: (err) => {
         console.error("Error en login:", err.error?.response || err.message);
+        
       }
     });
   }
