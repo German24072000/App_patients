@@ -17,16 +17,25 @@ export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
     user: new FormControl('',Validators.required),
     password: new FormControl('', Validators.required)
-  })
-
-  constructor(private apiService:ApiService, private router:Router) {}
-  ngOnInit(): void {
-  }
+  });
 
   // errorStatus:boolean = false;
   errorStatus = signal(false);
   messageError:any = "";
 
+  constructor(private apiService:ApiService, private router:Router) {}
+
+  ngOnInit(): void {
+    this.checkLocalStorage();
+  }
+
+  checkLocalStorage() {
+    if(localStorage.getItem("token")) {
+      this.router.navigate(['dashboard']);
+    }
+  }
+
+  
   onLogin() {
 
     const form: LoginI = {
@@ -36,7 +45,7 @@ export class LoginComponent implements OnInit {
 
     this.apiService.loginByEmail(form).subscribe({
       next: (data) => {
-        
+
         let dataResponseI: ResponseI = data
 
         if(dataResponseI.status == "ok") {
