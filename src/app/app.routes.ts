@@ -23,7 +23,7 @@ export const routes: Routes = [
         component: NewPatientComponent
     },
     {
-        path: 'edit-patient',
+        path: 'edit-patient/:id',
         component: EditPatientComponent
     },
 ];
