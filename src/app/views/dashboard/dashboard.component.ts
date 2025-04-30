@@ -22,7 +22,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.apiService.getAllPatients(1).subscribe({
       next: (data) => {
-        console.log(data);
         this.patients.set(data);
         
       },

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+
 import { LoginI } from '../../models/login.interface';
 import { ResponseI } from '../../models/response.interface';
 import { ListPatientsI } from '../../models/listpatients.interface';
+import { PatientI } from '../../models/patient.interface';
+
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
@@ -27,5 +30,11 @@ export class ApiService {
 
     return this.http.get<ListPatientsI[]>(direction)
 
+   }
+
+   getOnePatient(idPatient:number):Observable<PatientI>{
+    let direction = this.url + "patients/patient?id=" + idPatient;
+
+    return this.http.get<PatientI>(direction);
    }
 }
