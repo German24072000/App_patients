@@ -6,26 +6,25 @@ import { ActivatedRoute } from '@angular/router';
 
 import { ApiService } from '../../services/api/api.service';
 
+import {Router} from '@angular/router';
+
 import {
   FormGroup,
   FormControl,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+
 import { PatientI } from '../../models/patient.interface';
 
 @Component({
   selector: 'app-edit-patient',
-  imports: [HeaderComponent, FooterComponent],
+  imports: [HeaderComponent, FooterComponent, ReactiveFormsModule, FormsModule],
   templateUrl: './edit-patient.component.html',
   styleUrl: './edit-patient.component.scss',
 })
 export class EditPatientComponent implements OnInit {
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private apiService: ApiService
-  ) {}
-
   editPatientForm = new FormGroup({
     idPatient: new FormControl(0, Validators.required),
     dni: new FormControl(''),
@@ -39,13 +38,19 @@ export class EditPatientComponent implements OnInit {
     token: new FormControl('', Validators.required),
   });
 
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private apiService: ApiService,
+    private router: Router
+  ) {}
+
   ngOnInit() {
     let idPatient = this.activatedRoute.snapshot.params['id'];
 
     this.apiService.getOnePatient(idPatient).subscribe({
       next: (data) => {
         const patient: PatientI = data;
-        
+
         this.editPatientForm.patchValue({
           idPatient: patient.idPatient,
           dni: patient.dni,
@@ -59,7 +64,6 @@ export class EditPatientComponent implements OnInit {
           token: localStorage.getItem('token'),
         });
 
-        console.log(this.editPatientForm.value);
       },
       error: (error) => {
         console.log(error);
@@ -69,5 +73,30 @@ export class EditPatientComponent implements OnInit {
 
   getToken() {
     console.log(localStorage.getItem('token'));
+  }
+
+  updatePatient() {
+    const updatedPatient: PatientI = {
+      idPatient: this.editPatientForm.value.idPatient!,
+      dni: this.editPatientForm.value.dni!,
+      name: this.editPatientForm.value.name!,
+      address: this.editPatientForm.value.address!,
+      postalCode: this.editPatientForm.value.postalCode!,
+      telephone: this.editPatientForm.value.telephone!,
+      gender: this.editPatientForm.value.gender!,
+      dateOfBirth: this.editPatientForm.value.dateOfBirth!,
+      email: this.editPatientForm.value.email!,
+    };
+    
+    this.apiService.updatePatient(updatedPatient).subscribe({
+      next:() => {
+        
+        this.router.navigate(['/dashboard'], { queryParams: { param: 'update-patient' } });
+      },
+      error:(err) => {
+        console.log('Error updating patient',err);
+        
+      }
+    })
   }
 }

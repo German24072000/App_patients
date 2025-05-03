@@ -37,4 +37,9 @@ export class ApiService {
 
     return this.http.get<PatientI>(direction);
    }
+
+   updatePatient(patient:PatientI) {
+    let direction = this.url + "update-patient";
+    return this.http.post<PatientI>(direction, patient);
+   }
 }

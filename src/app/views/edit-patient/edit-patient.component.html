@@ -1,3 +1,70 @@
 <app-header></app-header>
-<div class="container">contenido</div>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+
+            <form [formGroup]="editPatientForm" (ngSubmit)="updatePatient()">
+                <div class="form-group mb-4">
+                    <label for="txtName">Name:</label>
+                    <input type="text" class="form-control" id="txtName" aria-describedby="edit your name"
+                        placeholder="Edit name" formControlName="name">
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="txtDni">DNI:</label>
+                    <input type="text" class="form-control" id="txtDni"
+                        aria-describedby="edit identity national document" placeholder="Edit DNI" formControlName="dni">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="txtTelephone">Telephone:</label>
+                    <input type="text" class="form-control" id="txtTelephone" aria-describedby="edit your name"
+                        placeholder="Edit name" formControlName="telephone">
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="txtAddress">Address:</label>
+                    <input type="email" class="form-control" id="txtAddress" aria-describedby="edit your email"
+                        placeholder="Edit email" formControlName="address">
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="txtPostalCode">Postal Code:</label>
+                    <input type="text" class="form-control" id="txtPostalCode" aria-describedby="edit your postal code"
+                        placeholder="Edit postal code" formControlName="postalCode">
+                </div>
+
+                <div class="form-group mb-4">
+                    <div class="input-group-prepend">
+                        <label for="selectGender">Gender:</label>
+                    </div>
+                    <select id="selectGender" class="form-select" aria-label=".form-select-lg example"
+                        formControlName="gender">
+                        <option selected [ngValue]="''">Open this select menu</option>
+                        <option [ngValue]="'Male'">Male</option>
+                        <option [ngValue]="'Female'">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="date_dateOfBirth">Date of Birth:</label>
+
+                    <div class="input-group">
+                        <input type="date" class="form-control" placeholder="yyyy-mm-dd" id="date_dateOfBirth"
+                            formControlName="dateOfBirth">
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="txtEmail">Email:</label>
+                    <input type="email" class="form-control" id="txtEmail" aria-describedby="edit your email"
+                        placeholder="Edit email" formControlName="email">
+                </div>
+                <button type="submit" class="btn btn-primary">Edit patient</button>
+            </form>
+        </div>
+    </div>
+</div>
 <app-footer></app-footer>
