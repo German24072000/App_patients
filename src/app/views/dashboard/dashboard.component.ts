@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   patients = signal<ListPatientsI[]>([]);
 
   showAlertUpdatedPatient = signal(false);
+  showAlertDeletedPatient = signal(false);
 
   constructor(
     private apiService: ApiService,
@@ -39,6 +40,21 @@ export class DashboardComponent implements OnInit {
         }, 3000);
 
         //remove the param from page edit-patient of url
+        setTimeout(() => {
+          this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: {},
+            replaceUrl: true
+          })
+        }, 500);
+
+      } else if(params['param'] =='delete-patient') {
+        this.showAlertDeletedPatient.set(true)
+
+        setTimeout(() => {
+          this.showAlertDeletedPatient.set(false)
+        }, 3000);
+
         setTimeout(() => {
           this.router.navigate([], {
             relativeTo: this.activatedRoute,

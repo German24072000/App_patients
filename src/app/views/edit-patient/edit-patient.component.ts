@@ -99,4 +99,33 @@ export class EditPatientComponent implements OnInit {
       }
     })
   }
+
+  deletePatient() {
+    const patientToDelete: PatientI = {
+      idPatient: this.editPatientForm.value.idPatient!,
+      dni: this.editPatientForm.value.dni!,
+      name: this.editPatientForm.value.name!,
+      address: this.editPatientForm.value.address!,
+      postalCode: this.editPatientForm.value.postalCode!,
+      telephone: this.editPatientForm.value.telephone!,
+      gender: this.editPatientForm.value.gender!,
+      dateOfBirth: this.editPatientForm.value.dateOfBirth!,
+      email: this.editPatientForm.value.email!,
+    };
+
+    console.log(this.editPatientForm.value.idPatient);
+    
+
+    this.apiService.deletePatient(patientToDelete).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.router.navigate(['/dashboard'], { queryParams: { param: 'delete-patient' } });
+        
+      },
+      error: (err) => {
+        console.log(err);
+        
+      }
+    })
+  }
 }

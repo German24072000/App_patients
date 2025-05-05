@@ -40,6 +40,18 @@ export class ApiService {
 
    updatePatient(patient:PatientI) {
     let direction = this.url + "update-patient";
-    return this.http.post<PatientI>(direction, patient);
+    return this.http.put<PatientI>(direction, patient);
+   }
+
+   deletePatient(patient:PatientI) {
+    let direction = this.url + "delete-patient/" + patient.idPatient;
+    // let Options = {
+    //   headers: new HttpHeaders({
+    //     'content-type': 'application/json'
+    //   }),
+    //   body: patient
+    // }
+    return this.http.delete<ResponseI>(direction)
+
    }
 }
