@@ -17,6 +17,13 @@
   </div>
   }
 
+  @if(showAlertAddedPatient()) {
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+      patient correctly added
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  }
+
   <div id="mainDashboard" class="container">
     <h3>List of patients</h3>
     <br>

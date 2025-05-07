@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
 
   showAlertUpdatedPatient = signal(false);
   showAlertDeletedPatient = signal(false);
+  showAlertAddedPatient = signal(false);
 
   constructor(
     private apiService: ApiService,
@@ -53,6 +54,21 @@ export class DashboardComponent implements OnInit {
 
         setTimeout(() => {
           this.showAlertDeletedPatient.set(false)
+        }, 3000);
+
+        setTimeout(() => {
+          this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: {},
+            replaceUrl: true
+          })
+        }, 500);
+
+      } else if(params['param'] =='add-patient') {
+        this.showAlertAddedPatient.set(true)
+        
+        setTimeout(() => {
+          this.showAlertAddedPatient.set(false)
         }, 3000);
 
         setTimeout(() => {

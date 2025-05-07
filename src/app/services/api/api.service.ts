@@ -54,4 +54,9 @@ export class ApiService {
     return this.http.delete<ResponseI>(direction)
 
    }
+
+   addPatient(patient:PatientI) {
+    let direction = this.url + "patients/add-patient/";
+    return this.http.post<PatientI>(direction,patient)
+   }
 }
